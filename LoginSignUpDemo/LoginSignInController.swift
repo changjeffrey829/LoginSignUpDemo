@@ -23,6 +23,7 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
     fileprivate func config() {
         loginSigninView.profileImageView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         loginSigninView.loginRegisterSegmentedControl.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
+        
         loginSigninView.nameTextField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         loginSigninView.emailTextField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         loginSigninView.passwordTextField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
@@ -31,69 +32,82 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
         view = loginSigninView
     }
     @objc func handleLoginRegisterChange() {
-        // reference for ui objects
-        let loginRegisterSegmentedControl = loginSigninView.loginRegisterSegmentedControl
-        let loginRegisterButton = loginSigninView.loginRegisterButton
-        let profileImageView = loginSigninView.profileImageView
-        let nameTextField = loginSigninView.nameTextField
-        let emailTextField = loginSigninView.emailTextField
-        let passwordTextField = loginSigninView.passwordTextField
-        let inputsContainerView = loginSigninView.inputsContainerView
         
         // change title
-        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
-        loginRegisterButton.setTitle(title, for: UIControl.State())
-
-        //change icon image
-        profileImageView.image = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? #imageLiteral(resourceName: "logo") : #imageLiteral(resourceName: "plus_photo")
-
-        // change height of inputContainerView
-        loginSigninView.inputsContainerViewHeightAnchor?.constant = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 100 : 150
-
-        // change height of nameTextField
-        loginSigninView.nameTextFieldHeightAnchor?.isActive = false
-        loginSigninView.nameTextFieldHeightAnchor = nameTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 0 : 1/3)
-        loginSigninView.nameTextFieldHeightAnchor?.isActive = true
-        nameTextField.isHidden = loginRegisterSegmentedControl.selectedSegmentIndex == 0
-
-        loginSigninView.emailTextFieldHeightAnchor?.isActive = false
-        loginSigninView.emailTextFieldHeightAnchor = emailTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-        loginSigninView.emailTextFieldHeightAnchor?.isActive = true
-
-        loginSigninView.passwordTextFieldHeightAnchor?.isActive = false
-        loginSigninView.passwordTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-        loginSigninView.passwordTextFieldHeightAnchor?.isActive = true
+        let title = loginSigninView.loginRegisterSegmentedControl.titleForSegment(at: loginSigninView.loginRegisterSegmentedControl.selectedSegmentIndex)
+        loginSigninView.loginRegisterButton.setTitle(title, for: UIControl.State())
+        
+        if loginSigninView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
+            transitingToLogin()
+        } else {
+            transitingToRegister()
+        }
+        
+        
+        
+//        // reference for ui objects
+//        let loginRegisterSegmentedControl = loginSigninView.loginRegisterSegmentedControl
+//        let loginRegisterButton = loginSigninView.loginRegisterButton
+//        let profileImageView = loginSigninView.profileImageView
+//        let nameTextField = loginSigninView.nameTextField
+//        let emailTextField = loginSigninView.emailTextField
+//        let passwordTextField = loginSigninView.passwordTextField
+//        let inputsContainerView = loginSigninView.inputsContainerView
+//
+//        // change title
+//        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
+//        loginRegisterButton.setTitle(title, for: UIControl.State())
+//
+//        //change icon image
+//        profileImageView.image = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? #imageLiteral(resourceName: "logo") : #imageLiteral(resourceName: "plus_photo")
+//
+//        // change height of inputContainerView
+//        loginSigninView.inputsContainerViewHeightAnchor?.constant = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 100 : 150
+//
+//        // change height of nameTextField
+//        loginSigninView.nameTextFieldHeightAnchor?.isActive = false
+//        loginSigninView.nameTextFieldHeightAnchor = nameTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 0 : 1/3)
+//        loginSigninView.nameTextFieldHeightAnchor?.isActive = true
+//        nameTextField.isHidden = loginRegisterSegmentedControl.selectedSegmentIndex == 0
+//
+//        loginSigninView.emailTextFieldHeightAnchor?.isActive = false
+//        loginSigninView.emailTextFieldHeightAnchor = emailTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
+//        loginSigninView.emailTextFieldHeightAnchor?.isActive = true
+//
+//        loginSigninView.passwordTextFieldHeightAnchor?.isActive = false
+//        loginSigninView.passwordTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
+//        loginSigninView.passwordTextFieldHeightAnchor?.isActive = true
     }
     
+    fileprivate func transitingToLogin() {
+        let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
+        UIView.transition(with: loginSigninView.registerContainerView, duration: 0.3, options: transitionOptions, animations: {
+            self.loginSigninView.loginContainerView.isHidden = false
+        })
+        UIView.transition(with: loginSigninView.loginContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
+            self.loginSigninView.registerContainerView.isHidden = true
+            self.loginSigninView.bringSubviewToFront(self.loginSigninView.registerContainerView)
+        }
+    }
     
-    let firstView = UIView()
-    let secondView = UIView()
+    fileprivate func transitingToRegister() {
+        let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
+        UIView.transition(with: loginSigninView.loginContainerView, duration: 0.3, options: transitionOptions, animations: {
+            self.loginSigninView.registerContainerView.isHidden = false
+        })
+        UIView.transition(with: loginSigninView.registerContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
+            self.loginSigninView.loginContainerView.isHidden = true
+            self.loginSigninView.bringSubviewToFront(self.loginSigninView.loginContainerView)
+        }
+    }
     
     @objc private func launchForgetPasswordVC() {
         print("launch reset pw vc")
-//        let vc = ResetPasswordViewController()
-//        present(vc, animated: true, completion: nil)
-        
-        
-        let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
-        
-        UIView.transition(with: firstView, duration: 1.0, options: transitionOptions, animations: {
-            self.firstView.isHidden = true
-        })
-        
-        UIView.transition(with: secondView, duration: 1.0, options: transitionOptions, animations: {
-            self.secondView.isHidden = false
-        })
         
     }
     
     func finishedRegistration() {
-//        UIApplication.shared.keyWindow?.rootViewController = MainTabBarController()
-//        FSService.shared.fetchCurrentUserFromFirestore { (_) in
-//        }
-//        dismiss(animated: true, completion: nil)
     }
-    
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -243,6 +257,7 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     @objc func handleTextInputChange() {
         print("handleTextInputChange")
+        
 //        let isFormValid = emailTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0
 //        if isFormValid {
 //            loginRegisterButton.isEnabled = true

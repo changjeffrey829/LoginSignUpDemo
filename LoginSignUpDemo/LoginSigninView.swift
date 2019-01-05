@@ -58,15 +58,20 @@ class LoginSigninView: UIView {
         forgetPasswordButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
+    fileprivate func setupLoginRegisterView() {
+        
+    }
+    
     fileprivate func setUpViews() {
         addSubview(profileImageView)
         addSubview(loginRegisterSegmentedControl)
         addSubview(inputsContainerView)
         addSubview(loginRegisterButton)
         addSubview(forgetPasswordButton)
-        
         addSubview(loginContainerView)
-        addSubview(signUpContainerView)
+        addSubview(registerContainerView)
+        
+        
         //profileImageView
         profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         profileImageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 32, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 150, height: 150)
@@ -75,13 +80,16 @@ class LoginSigninView: UIView {
         loginRegisterSegmentedControl.anchor(top: profileImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 50)
         
 //        setupContainerView()
+        
+        registerContainerView.anchor(top: loginRegisterSegmentedControl.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 150)
+        registerContainerView.isHidden = true
         loginContainerView.anchor(top: loginRegisterSegmentedControl.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 150)
         
-        signUpContainerView.anchor(top: loginRegisterSegmentedControl.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 16, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 150)
-        signUpContainerView.isHidden = true
         
         //loginRegisterButton
-        loginRegisterButton.anchor(top: inputsContainerView.bottomAnchor, left: loginRegisterSegmentedControl.leftAnchor, bottom: nil, right: loginRegisterSegmentedControl.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+//        loginRegisterButton.anchor(top: inputsContainerView.bottomAnchor, left: loginRegisterSegmentedControl.leftAnchor, bottom: nil, right: loginRegisterSegmentedControl.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        loginRegisterButton.anchor(top: registerContainerView.bottomAnchor, left: loginRegisterSegmentedControl.leftAnchor, bottom: nil, right: loginRegisterSegmentedControl.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        forgetPasswordButton.anchor(top: loginRegisterButton.bottomAnchor, left: loginRegisterButton.leftAnchor, bottom: nil, right: loginRegisterButton.rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
     
     let inputsContainerView: UIView = {
@@ -93,18 +101,16 @@ class LoginSigninView: UIView {
         return view
     }()
     
-    let loginContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
+    let loginContainerView: LoginContainerView = {
+        let view = LoginContainerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         return view
     }()
     
-    let signUpContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
+    let registerContainerView: RegisterContainerView = {
+        let view = RegisterContainerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
