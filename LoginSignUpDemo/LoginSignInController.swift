@@ -12,25 +12,37 @@ import Photos
 class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let loginSigninView = LoginSigninView()
+    let viewModel = LoginViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         config()
-//        TapScreenToHideKeyboard()
+        TapScreenToHideKeyboard()
     }
     
     fileprivate func config() {
         loginSigninView.profileImageView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         loginSigninView.loginRegisterSegmentedControl.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
         
-        loginSigninView.nameTextField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
-        loginSigninView.emailTextField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
-        loginSigninView.passwordTextField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        configLoginContainerView()
+        configRegisterContainerView()
         loginSigninView.loginRegisterButton.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
         loginSigninView.forgetPasswordButton.addTarget(self, action: #selector(launchForgetPasswordVC), for: .touchUpInside)
         view = loginSigninView
     }
+    
+    fileprivate func configLoginContainerView() {
+        loginSigninView.loginContainerView.emailTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
+        loginSigninView.loginContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
+    }
+    
+    fileprivate func configRegisterContainerView() {
+        loginSigninView.registerContainerView.nameTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
+        loginSigninView.registerContainerView.emailTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
+        loginSigninView.registerContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
+    }
+    
     @objc func handleLoginRegisterChange() {
         
         // change title
@@ -39,8 +51,10 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
         
         if loginSigninView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
             transitingToLogin()
+            handleValidateLoginText()
         } else {
             transitingToRegister()
+            handleValidateRegisterText()
         }
         
         
@@ -49,10 +63,6 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
 //        let loginRegisterSegmentedControl = loginSigninView.loginRegisterSegmentedControl
 //        let loginRegisterButton = loginSigninView.loginRegisterButton
 //        let profileImageView = loginSigninView.profileImageView
-//        let nameTextField = loginSigninView.nameTextField
-//        let emailTextField = loginSigninView.emailTextField
-//        let passwordTextField = loginSigninView.passwordTextField
-//        let inputsContainerView = loginSigninView.inputsContainerView
 //
 //        // change title
 //        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
@@ -60,23 +70,6 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
 //
 //        //change icon image
 //        profileImageView.image = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? #imageLiteral(resourceName: "logo") : #imageLiteral(resourceName: "plus_photo")
-//
-//        // change height of inputContainerView
-//        loginSigninView.inputsContainerViewHeightAnchor?.constant = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 100 : 150
-//
-//        // change height of nameTextField
-//        loginSigninView.nameTextFieldHeightAnchor?.isActive = false
-//        loginSigninView.nameTextFieldHeightAnchor = nameTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 0 : 1/3)
-//        loginSigninView.nameTextFieldHeightAnchor?.isActive = true
-//        nameTextField.isHidden = loginRegisterSegmentedControl.selectedSegmentIndex == 0
-//
-//        loginSigninView.emailTextFieldHeightAnchor?.isActive = false
-//        loginSigninView.emailTextFieldHeightAnchor = emailTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-//        loginSigninView.emailTextFieldHeightAnchor?.isActive = true
-//
-//        loginSigninView.passwordTextFieldHeightAnchor?.isActive = false
-//        loginSigninView.passwordTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-//        loginSigninView.passwordTextFieldHeightAnchor?.isActive = true
     }
     
     fileprivate func transitingToLogin() {
@@ -255,17 +248,31 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
         }
     }
     
-    @objc func handleTextInputChange() {
-        print("handleTextInputChange")
-        
-//        let isFormValid = emailTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0
-//        if isFormValid {
-//            loginRegisterButton.isEnabled = true
-//            loginRegisterButton.backgroundColor = .customDarkBrown
-//        } else {
-//            loginRegisterButton.isEnabled = false
-//            loginRegisterButton.backgroundColor = UIColor.tabBarBrown
-//        }
+    @objc func handleValidateLoginText() {
+        let email = loginSigninView.loginContainerView.emailTextField.text ?? ""
+        let password = loginSigninView.loginContainerView.passwordTextField.text ?? ""
+        let isFormValid = viewModel.loginMinimumWordValidation(email: email, password: password)
+        if isFormValid {
+            loginSigninView.loginRegisterButton.isEnabled = true
+            loginSigninView.loginRegisterButton.backgroundColor = .customDarkBrown
+        } else {
+            loginSigninView.loginRegisterButton.isEnabled = false
+            loginSigninView.loginRegisterButton.backgroundColor = .tabBarBrown
+        }
+    }
+    
+    @objc func handleValidateRegisterText() {
+        let name = loginSigninView.registerContainerView.nameTextField.text ?? ""
+        let email = loginSigninView.registerContainerView.emailTextField.text ?? ""
+        let password = loginSigninView.registerContainerView.passwordTextField.text ?? ""
+        let isFormValid = viewModel.registerMinimumWordValidation(name: name, email: email, password: password)
+        if isFormValid {
+            loginSigninView.loginRegisterButton.isEnabled = true
+            loginSigninView.loginRegisterButton.backgroundColor = .customDarkBrown
+        } else {
+            loginSigninView.loginRegisterButton.isEnabled = false
+            loginSigninView.loginRegisterButton.backgroundColor = .tabBarBrown
+        }
     }
 }
 
