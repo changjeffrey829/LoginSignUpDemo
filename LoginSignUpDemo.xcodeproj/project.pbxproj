@@ -14,8 +14,8 @@
 		040920E821CD80690024F164 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040920E621CD80690024F164 /* LaunchScreen.storyboard */; };
 		040920F021D2DEAA0024F164 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920EF21D2DEAA0024F164 /* UIColorExt.swift */; };
 		040920F421D2DF440024F164 /* ViewAnchorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920F321D2DF440024F164 /* ViewAnchorExt.swift */; };
-		040920F621D3581E0024F164 /* LoginSigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920F521D3581E0024F164 /* LoginSigninView.swift */; };
-		040920F821D6C6780024F164 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920F721D6C6780024F164 /* LoginViewModel.swift */; };
+		040920F621D3581E0024F164 /* LoginRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920F521D3581E0024F164 /* LoginRegisterView.swift */; };
+		040920F821D6C6780024F164 /* TextValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920F721D6C6780024F164 /* TextValidation.swift */; };
 		040920FC21E06B610024F164 /* LoginContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FB21E06B610024F164 /* LoginContainerView.swift */; };
 		040920FE21E07F480024F164 /* TextFieldExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FD21E07F480024F164 /* TextFieldExt.swift */; };
 		0409210021E08E880024F164 /* RegisterContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FF21E08E880024F164 /* RegisterContainerView.swift */; };
@@ -31,8 +31,8 @@
 		040920E921CD80690024F164 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		040920EF21D2DEAA0024F164 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		040920F321D2DF440024F164 /* ViewAnchorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAnchorExt.swift; sourceTree = "<group>"; };
-		040920F521D3581E0024F164 /* LoginSigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSigninView.swift; sourceTree = "<group>"; };
-		040920F721D6C6780024F164 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		040920F521D3581E0024F164 /* LoginRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterView.swift; sourceTree = "<group>"; };
+		040920F721D6C6780024F164 /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
 		040920FB21E06B610024F164 /* LoginContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginContainerView.swift; sourceTree = "<group>"; };
 		040920FD21E07F480024F164 /* TextFieldExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExt.swift; sourceTree = "<group>"; };
 		040920FF21E08E880024F164 /* RegisterContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterContainerView.swift; sourceTree = "<group>"; };
@@ -70,8 +70,8 @@
 			children = (
 				040920DD21CD80680024F164 /* AppDelegate.swift */,
 				040920DF21CD80680024F164 /* LoginSignInController.swift */,
-				040920F721D6C6780024F164 /* LoginViewModel.swift */,
-				040920F521D3581E0024F164 /* LoginSigninView.swift */,
+				040920F721D6C6780024F164 /* TextValidation.swift */,
+				040920F521D3581E0024F164 /* LoginRegisterView.swift */,
 				040920FB21E06B610024F164 /* LoginContainerView.swift */,
 				040920FF21E08E880024F164 /* RegisterContainerView.swift */,
 				040920F121D2DEB00024F164 /* Extensions */,
@@ -167,11 +167,11 @@
 				040920E021CD80680024F164 /* LoginSignInController.swift in Sources */,
 				040920FC21E06B610024F164 /* LoginContainerView.swift in Sources */,
 				040920F421D2DF440024F164 /* ViewAnchorExt.swift in Sources */,
-				040920F821D6C6780024F164 /* LoginViewModel.swift in Sources */,
+				040920F821D6C6780024F164 /* TextValidation.swift in Sources */,
 				040920F021D2DEAA0024F164 /* UIColorExt.swift in Sources */,
 				0409210021E08E880024F164 /* RegisterContainerView.swift in Sources */,
 				040920DE21CD80680024F164 /* AppDelegate.swift in Sources */,
-				040920F621D3581E0024F164 /* LoginSigninView.swift in Sources */,
+				040920F621D3581E0024F164 /* LoginRegisterView.swift in Sources */,
 				040920FE21E07F480024F164 /* TextFieldExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

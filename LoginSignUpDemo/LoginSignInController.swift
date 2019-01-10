@@ -9,88 +9,81 @@
 import UIKit
 import Photos
 
-class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidation {
     
-    let loginSigninView = LoginSigninView()
-    let viewModel = LoginViewModel()
+    let loginRegisterView = LoginRegisterView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        config()
+        configLoginRegisterView()
         TapScreenToHideKeyboard()
     }
     
-    fileprivate func config() {
-        loginSigninView.profileImageView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
-        loginSigninView.loginRegisterSegmentedControl.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
-        
+    //MARK: CONFIGURATION: LoginRegisterView
+    fileprivate func configLoginRegisterView() {
+        configButtons()
         configLoginContainerView()
         configRegisterContainerView()
-        loginSigninView.loginRegisterButton.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
-        loginSigninView.forgetPasswordButton.addTarget(self, action: #selector(launchForgetPasswordVC), for: .touchUpInside)
-        view = loginSigninView
+        view = loginRegisterView
+    }
+    
+    fileprivate func configButtons() {
+        let tapProfileGesture = UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView))
+        loginRegisterView.profileImageView.addGestureRecognizer(tapProfileGesture)
+        loginRegisterView.loginRegisterSegmentedControl.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
+        loginRegisterView.loginRegisterButton.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
+        loginRegisterView.forgetPasswordButton.addTarget(self, action: #selector(launchForgetPasswordVC), for: .touchUpInside)
     }
     
     fileprivate func configLoginContainerView() {
-        loginSigninView.loginContainerView.emailTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
-        loginSigninView.loginContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
+        loginRegisterView.loginContainerView.emailTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
+        loginRegisterView.loginContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
     }
     
     fileprivate func configRegisterContainerView() {
-        loginSigninView.registerContainerView.nameTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
-        loginSigninView.registerContainerView.emailTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
-        loginSigninView.registerContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
+        loginRegisterView.registerContainerView.nameTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
+        loginRegisterView.registerContainerView.emailTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
+        loginRegisterView.registerContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
     }
     
-    @objc func handleLoginRegisterChange() {
-        
-        // change title
-        let title = loginSigninView.loginRegisterSegmentedControl.titleForSegment(at: loginSigninView.loginRegisterSegmentedControl.selectedSegmentIndex)
-        loginSigninView.loginRegisterButton.setTitle(title, for: UIControl.State())
-        
-        if loginSigninView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
-            transitingToLogin()
-            handleValidateLoginText()
-        } else {
-            transitingToRegister()
-            handleValidateRegisterText()
-        }
-        
-        
-        
-//        // reference for ui objects
-//        let loginRegisterSegmentedControl = loginSigninView.loginRegisterSegmentedControl
-//        let loginRegisterButton = loginSigninView.loginRegisterButton
-//        let profileImageView = loginSigninView.profileImageView
-//
-//        // change title
-//        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
-//        loginRegisterButton.setTitle(title, for: UIControl.State())
-//
-//        //change icon image
-//        profileImageView.image = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? #imageLiteral(resourceName: "logo") : #imageLiteral(resourceName: "plus_photo")
-    }
-    
+    //MARK: ANIMATION
     fileprivate func transitingToLogin() {
         let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
-        UIView.transition(with: loginSigninView.registerContainerView, duration: 0.3, options: transitionOptions, animations: {
-            self.loginSigninView.loginContainerView.isHidden = false
+        UIView.transition(with: loginRegisterView.registerContainerView, duration: 0.3, options: transitionOptions, animations: {
+            self.loginRegisterView.loginContainerView.isHidden = false
+            self.loginRegisterView.profileImageView.image = #imageLiteral(resourceName: "logo")
+            self.loginRegisterView.profileImageView.isUserInteractionEnabled = false
         })
-        UIView.transition(with: loginSigninView.loginContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
-            self.loginSigninView.registerContainerView.isHidden = true
-            self.loginSigninView.bringSubviewToFront(self.loginSigninView.registerContainerView)
+        UIView.transition(with: loginRegisterView.loginContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
+            self.loginRegisterView.registerContainerView.isHidden = true
+            self.loginRegisterView.bringSubviewToFront(self.loginRegisterView.registerContainerView)
         }
     }
     
     fileprivate func transitingToRegister() {
         let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
-        UIView.transition(with: loginSigninView.loginContainerView, duration: 0.3, options: transitionOptions, animations: {
-            self.loginSigninView.registerContainerView.isHidden = false
+        UIView.transition(with: loginRegisterView.loginContainerView, duration: 0.3, options: transitionOptions, animations: {
+            self.loginRegisterView.registerContainerView.isHidden = false
+            self.loginRegisterView.profileImageView.image = #imageLiteral(resourceName: "plus_photo")
+            self.loginRegisterView.profileImageView.isUserInteractionEnabled = true
         })
-        UIView.transition(with: loginSigninView.registerContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
-            self.loginSigninView.loginContainerView.isHidden = true
-            self.loginSigninView.bringSubviewToFront(self.loginSigninView.loginContainerView)
+        UIView.transition(with: loginRegisterView.registerContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
+            self.loginRegisterView.loginContainerView.isHidden = true
+            self.loginRegisterView.bringSubviewToFront(self.loginRegisterView.loginContainerView)
+        }
+    }
+    
+    @objc func handleLoginRegisterChange() {
+        let title = loginRegisterView.loginRegisterSegmentedControl.titleForSegment(at: loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex)
+        loginRegisterView.loginRegisterButton.setTitle(title, for: UIControl.State())
+        
+        if loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
+            transitingToLogin()
+            handleValidateLoginText()
+        } else {
+            transitingToRegister()
+            handleValidateRegisterText()
         }
     }
     
@@ -193,40 +186,16 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     
     @objc func handleSelectProfileImageView() {
-        print("handleSelectProfileImageView")
-//        authorizeToAlbum { (status) in
-//            if status == true {
-//                let imagePickerController = UIImagePickerController()
-//                imagePickerController.sourceType = .photoLibrary
-//                imagePickerController.delegate = self
-//                imagePickerController.allowsEditing = true
-//                self.present(imagePickerController, animated: true, completion: nil)
-//            }
-//        }
+        authorizeToAlbum { (status) in
+            if status == true {
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.sourceType = .photoLibrary
+                imagePickerController.delegate = self
+                imagePickerController.allowsEditing = true
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+        }
     }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-//        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-//
-//        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-//            editedImage.withRenderingMode(.alwaysOriginal)
-//            profileImageView.image = editedImage
-//        } else if let originalImage =
-//            info["UIImagePickerControllerOriginalImage"] as? UIImage {
-//            originalImage.withRenderingMode(.alwaysOriginal)
-//            profileImageView.image = originalImage
-//        }
-//        profileImageView.layer.cornerRadius = profileImageView.frame.width/2
-//        profileImageView.layer.masksToBounds = true
-//        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    
     
     func authorizeToAlbum(completion:@escaping (Bool)->Void) {
         if PHPhotoLibrary.authorizationStatus() != .authorized {
@@ -249,29 +218,29 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     
     @objc func handleValidateLoginText() {
-        let email = loginSigninView.loginContainerView.emailTextField.text ?? ""
-        let password = loginSigninView.loginContainerView.passwordTextField.text ?? ""
-        let isFormValid = viewModel.loginMinimumWordValidation(email: email, password: password)
+        let email = loginRegisterView.loginContainerView.emailTextField.text ?? ""
+        let password = loginRegisterView.loginContainerView.passwordTextField.text ?? ""
+        let isFormValid = loginMinimumTextValidation(email: email, password: password)
         if isFormValid {
-            loginSigninView.loginRegisterButton.isEnabled = true
-            loginSigninView.loginRegisterButton.backgroundColor = .customDarkBrown
+            loginRegisterView.loginRegisterButton.isEnabled = true
+            loginRegisterView.loginRegisterButton.backgroundColor = .customDarkBrown
         } else {
-            loginSigninView.loginRegisterButton.isEnabled = false
-            loginSigninView.loginRegisterButton.backgroundColor = .tabBarBrown
+            loginRegisterView.loginRegisterButton.isEnabled = false
+            loginRegisterView.loginRegisterButton.backgroundColor = .tabBarBrown
         }
     }
     
     @objc func handleValidateRegisterText() {
-        let name = loginSigninView.registerContainerView.nameTextField.text ?? ""
-        let email = loginSigninView.registerContainerView.emailTextField.text ?? ""
-        let password = loginSigninView.registerContainerView.passwordTextField.text ?? ""
-        let isFormValid = viewModel.registerMinimumWordValidation(name: name, email: email, password: password)
+        let name = loginRegisterView.registerContainerView.nameTextField.text ?? ""
+        let email = loginRegisterView.registerContainerView.emailTextField.text ?? ""
+        let password = loginRegisterView.registerContainerView.passwordTextField.text ?? ""
+        let isFormValid = registerMinimumTextValidation(name: name, email: email, password: password)
         if isFormValid {
-            loginSigninView.loginRegisterButton.isEnabled = true
-            loginSigninView.loginRegisterButton.backgroundColor = .customDarkBrown
+            loginRegisterView.loginRegisterButton.isEnabled = true
+            loginRegisterView.loginRegisterButton.backgroundColor = .customDarkBrown
         } else {
-            loginSigninView.loginRegisterButton.isEnabled = false
-            loginSigninView.loginRegisterButton.backgroundColor = .tabBarBrown
+            loginRegisterView.loginRegisterButton.isEnabled = false
+            loginRegisterView.loginRegisterButton.backgroundColor = .tabBarBrown
         }
     }
 }
@@ -280,4 +249,17 @@ fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [U
     return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }
 
+extension LoginSignInController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else {
+            return
+        }
+        loginRegisterView.profileImageView.image = image
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
