@@ -9,13 +9,12 @@
 import UIKit
 import Photos
 
-class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidation {
+class LoginSignInController: UIViewController, UITextFieldDelegate {
     
     let loginRegisterView = LoginRegisterView()
-    let viewModel = ViewModel()
+    let viewModel = LoginRegisterViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         configLoginRegisterView()
         TapScreenToHideKeyboard()
         canUserTapButton(viewModel.isLoginValid)
@@ -23,10 +22,8 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidati
     
     override func viewDidAppear(_ animated: Bool) {
         if loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
-//            handleValidateLoginText()
             canUserTapButton(viewModel.isLoginValid)
         } else {
-//            handleValidateRegisterText()
             canUserTapButton(viewModel.isRegisterValid)
         }
     }

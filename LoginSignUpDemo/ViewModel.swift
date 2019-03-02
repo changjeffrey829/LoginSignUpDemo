@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ViewModel {
+class LoginRegisterViewModel {
     var isLoginValid = false
     var isRegisterValid = false
     var LoginEmail: String? {
