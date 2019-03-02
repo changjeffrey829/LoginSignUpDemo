@@ -12,29 +12,44 @@ import Photos
 class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidation {
     
     let loginRegisterView = LoginRegisterView()
-    
+    let viewModel = ViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         configLoginRegisterView()
         TapScreenToHideKeyboard()
+        canUserTapButton(viewModel.isLoginValid)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
-            handleValidateLoginText()
+//            handleValidateLoginText()
+            canUserTapButton(viewModel.isLoginValid)
         } else {
-            handleValidateRegisterText()
+//            handleValidateRegisterText()
+            canUserTapButton(viewModel.isRegisterValid)
         }
     }
-    //MARK: ----------------------------------------------------------
     
-    //MARK: CONFIGURATION: LoginRegisterView
+    //MARK:- CONFIGURATION: LoginRegisterView
     fileprivate func configLoginRegisterView() {
         configButtons()
         configLoginContainerView()
         configRegisterContainerView()
         view = loginRegisterView
+        viewModel.isFormValidObserver = { [unowned self] (isValid) in
+            self.canUserTapButton(isValid)
+        }
+    }
+    
+    fileprivate func canUserTapButton(_ isFormValid: Bool) {
+        if isFormValid {
+            loginRegisterView.loginRegisterButton.isEnabled = true
+            loginRegisterView.loginRegisterButton.backgroundColor = .customDarkBrown
+        } else {
+            loginRegisterView.loginRegisterButton.isEnabled = false
+            loginRegisterView.loginRegisterButton.backgroundColor = .tabBarBrown
+        }
     }
     
     fileprivate func configButtons() {
@@ -46,18 +61,18 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidati
     }
     
     fileprivate func configLoginContainerView() {
-        loginRegisterView.loginContainerView.emailTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
-        loginRegisterView.loginContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateLoginText), for: .editingChanged)
+        viewModel.RegisterPassword = loginRegisterView.loginContainerView.passwordTextField.text
+        loginRegisterView.loginContainerView.emailTextField.addTarget(self, action: #selector(handleLoginTextChanged), for: .editingChanged)
+        loginRegisterView.loginContainerView.passwordTextField.addTarget(self, action: #selector(handleLoginTextChanged), for: .editingChanged)
     }
     
     fileprivate func configRegisterContainerView() {
-        loginRegisterView.registerContainerView.nameTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
-        loginRegisterView.registerContainerView.emailTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
-        loginRegisterView.registerContainerView.passwordTextField.addTarget(self, action: #selector(handleValidateRegisterText), for: .editingChanged)
+        loginRegisterView.registerContainerView.nameTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
+        loginRegisterView.registerContainerView.emailTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
+        loginRegisterView.registerContainerView.passwordTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
     }
-    //MARK: ----------------------------------------------------------
     
-    //MARK: ANIMATION
+    //MARK:- ANIMATION
     fileprivate func transitingToLogin() {
         let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
         UIView.transition(with: loginRegisterView.registerContainerView, duration: 0.3, options: transitionOptions, animations: {
@@ -83,19 +98,18 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidati
             self.loginRegisterView.bringSubviewToFront(self.loginRegisterView.loginContainerView)
         }
     }
-    //MARK: ----------------------------------------------------------
     
-    //MARK: Login, Register, and forget password
+    //MARK:- Login, Register, and forget password
     @objc func handleLoginRegisterChange() {
         let title = loginRegisterView.loginRegisterSegmentedControl.titleForSegment(at: loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex)
         loginRegisterView.loginRegisterButton.setTitle(title, for: UIControl.State())
         
         if loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
             transitingToLogin()
-            handleValidateLoginText()
+            canUserTapButton(viewModel.isLoginValid)
         } else {
             transitingToRegister()
-            handleValidateRegisterText()
+            canUserTapButton(viewModel.isRegisterValid)
         }
     }
     
@@ -129,9 +143,8 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidati
         print("launch reset pw vc")
         
     }
-    //MARK: ----------------------------------------------------------
     
-    //MARK: Keyboard and Textfield
+    //MARK:- Keyboard and Textfield
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleLoginRegister()
@@ -150,6 +163,26 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidati
         view.addGestureRecognizer(tap)
     }
     
+    @objc fileprivate func handleLoginTextChanged(textfield: UITextField) {
+        let loginView = loginRegisterView.loginContainerView
+        if textfield == loginView.emailTextField  {
+            viewModel.LoginEmail = loginView.emailTextField.text
+        } else {
+            viewModel.LoginPassword = loginView.passwordTextField.text
+        }
+    }
+    
+    @objc fileprivate func handleRegisterTextChanged(textfield: UITextField) {
+        let registerView = loginRegisterView.registerContainerView
+        if textfield == registerView.nameTextField  {
+            viewModel.RegisterName = registerView.nameTextField.text
+        } else if textfield == registerView.emailTextField {
+            viewModel.RegisterEmail = registerView.emailTextField.text
+        } else {
+            viewModel.RegisterPassword = registerView.passwordTextField.text
+        }
+    }
+    
     @objc func keyboardHide() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             
@@ -158,40 +191,11 @@ class LoginSignInController: UIViewController, UITextFieldDelegate, TextValidati
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
-    //MARK: ----------------------------------------------------------
-    
-    //MARK: Text Input Validation
-    @objc func handleValidateLoginText() {
-        let email = loginRegisterView.loginContainerView.emailTextField.text ?? ""
-        let password = loginRegisterView.loginContainerView.passwordTextField.text ?? ""
-        let isFormValid = loginMinimumTextValidation(email: email, password: password)
-        if isFormValid {
-            loginRegisterView.loginRegisterButton.isEnabled = true
-            loginRegisterView.loginRegisterButton.backgroundColor = .customDarkBrown
-        } else {
-            loginRegisterView.loginRegisterButton.isEnabled = false
-            loginRegisterView.loginRegisterButton.backgroundColor = .tabBarBrown
-        }
-    }
-    
-    @objc func handleValidateRegisterText() {
-        let name = loginRegisterView.registerContainerView.nameTextField.text ?? ""
-        let email = loginRegisterView.registerContainerView.emailTextField.text ?? ""
-        let password = loginRegisterView.registerContainerView.passwordTextField.text ?? ""
-        let isFormValid = registerMinimumTextValidation(name: name, email: email, password: password)
-        if isFormValid {
-            loginRegisterView.loginRegisterButton.isEnabled = true
-            loginRegisterView.loginRegisterButton.backgroundColor = .customDarkBrown
-        } else {
-            loginRegisterView.loginRegisterButton.isEnabled = false
-            loginRegisterView.loginRegisterButton.backgroundColor = .tabBarBrown
-        }
-    }
 }
 
 extension LoginSignInController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    //MARK: Handle picking profile image
+    //MARK:- Handle picking profile image
     @objc func handleSelectProfileImageView() {
         authorizeToAlbum { (status) in
             if status == true {

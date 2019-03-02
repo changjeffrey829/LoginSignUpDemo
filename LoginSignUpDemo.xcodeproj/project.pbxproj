@@ -19,6 +19,7 @@
 		040920FC21E06B610024F164 /* LoginContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FB21E06B610024F164 /* LoginContainerView.swift */; };
 		040920FE21E07F480024F164 /* TextFieldExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FD21E07F480024F164 /* TextFieldExt.swift */; };
 		0409210021E08E880024F164 /* RegisterContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FF21E08E880024F164 /* RegisterContainerView.swift */; };
+		04B5D614222AE73F00BD2A80 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D613222AE73F00BD2A80 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		040920FB21E06B610024F164 /* LoginContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginContainerView.swift; sourceTree = "<group>"; };
 		040920FD21E07F480024F164 /* TextFieldExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExt.swift; sourceTree = "<group>"; };
 		040920FF21E08E880024F164 /* RegisterContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterContainerView.swift; sourceTree = "<group>"; };
+		04B5D613222AE73F00BD2A80 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,9 +73,8 @@
 				040920DD21CD80680024F164 /* AppDelegate.swift */,
 				040920DF21CD80680024F164 /* LoginSignInController.swift */,
 				040920F721D6C6780024F164 /* TextValidation.swift */,
-				040920F521D3581E0024F164 /* LoginRegisterView.swift */,
-				040920FB21E06B610024F164 /* LoginContainerView.swift */,
-				040920FF21E08E880024F164 /* RegisterContainerView.swift */,
+				04B5D613222AE73F00BD2A80 /* ViewModel.swift */,
+				04B5D612222AE2E100BD2A80 /* Views */,
 				040920F121D2DEB00024F164 /* Extensions */,
 				040920E121CD80680024F164 /* Main.storyboard */,
 				040920E421CD80690024F164 /* Assets.xcassets */,
@@ -91,6 +92,16 @@
 				040920FD21E07F480024F164 /* TextFieldExt.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		04B5D612222AE2E100BD2A80 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				040920F521D3581E0024F164 /* LoginRegisterView.swift */,
+				040920FB21E06B610024F164 /* LoginContainerView.swift */,
+				040920FF21E08E880024F164 /* RegisterContainerView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B5D614222AE73F00BD2A80 /* ViewModel.swift in Sources */,
 				040920E021CD80680024F164 /* LoginSignInController.swift in Sources */,
 				040920FC21E06B610024F164 /* LoginContainerView.swift in Sources */,
 				040920F421D2DF440024F164 /* ViewAnchorExt.swift in Sources */,
