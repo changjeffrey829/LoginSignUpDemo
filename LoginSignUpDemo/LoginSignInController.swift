@@ -72,25 +72,25 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     //MARK:- ANIMATION
     fileprivate func transitingToLogin() {
         let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
-        UIView.transition(with: loginRegisterView.registerContainerView, duration: 0.3, options: transitionOptions, animations: {
+        UIView.transition(with: loginRegisterView.registerContainerView, duration: 0.3, options: transitionOptions, animations: { [unowned self] in
             self.loginRegisterView.loginContainerView.isHidden = false
             self.loginRegisterView.profileImageView.image = #imageLiteral(resourceName: "logo")
             self.loginRegisterView.profileImageView.isUserInteractionEnabled = false
         })
-        UIView.transition(with: loginRegisterView.loginContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
+        UIView.transition(with: loginRegisterView.loginContainerView, duration: 0.3, options: transitionOptions, animations: nil) { [unowned self] (_) in
             self.loginRegisterView.registerContainerView.isHidden = true
             self.loginRegisterView.bringSubviewToFront(self.loginRegisterView.registerContainerView)
         }
     }
-    
+
     fileprivate func transitingToRegister() {
         let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromLeft, .showHideTransitionViews]
-        UIView.transition(with: loginRegisterView.loginContainerView, duration: 0.3, options: transitionOptions, animations: {
+        UIView.transition(with: loginRegisterView.loginContainerView, duration: 0.3, options: transitionOptions, animations: { [unowned self] in
             self.loginRegisterView.registerContainerView.isHidden = false
             self.loginRegisterView.profileImageView.image = #imageLiteral(resourceName: "plus_photo")
             self.loginRegisterView.profileImageView.isUserInteractionEnabled = true
         })
-        UIView.transition(with: loginRegisterView.registerContainerView, duration: 0.3, options: transitionOptions, animations: nil) { (_) in
+        UIView.transition(with: loginRegisterView.registerContainerView, duration: 0.3, options: transitionOptions, animations: nil) { [unowned self] (_) in
             self.loginRegisterView.loginContainerView.isHidden = true
             self.loginRegisterView.bringSubviewToFront(self.loginRegisterView.loginContainerView)
         }
@@ -181,8 +181,7 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func keyboardHide() {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { [unowned self] in
             self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
             self.view.endEditing(true)
             self.view.layoutIfNeeded()
@@ -194,7 +193,7 @@ extension LoginSignInController: UIImagePickerControllerDelegate, UINavigationCo
     
     //MARK:- Handle picking profile image
     @objc func handleSelectProfileImageView() {
-        authorizeToAlbum { (status) in
+        authorizeToAlbum { [unowned self] (status) in
             if status == true {
                 let imagePickerController = UIImagePickerController()
                 imagePickerController.sourceType = .photoLibrary

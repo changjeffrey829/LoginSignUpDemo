@@ -28,6 +28,8 @@ class LoginRegisterView: UIView {
         forgetPasswordButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
+    
+    
     fileprivate func setUpViews() {
         addSubview(profileImageView)
         addSubview(loginRegisterSegmentedControl)
@@ -95,6 +97,7 @@ class LoginRegisterView: UIView {
         sc.translatesAutoresizingMaskIntoConstraints = false
         sc.tintColor = UIColor.white
         sc.selectedSegmentIndex = 0
+        sc.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
         return sc
     }()
     
