@@ -18,8 +18,21 @@
 		040920FC21E06B610024F164 /* LoginContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FB21E06B610024F164 /* LoginContainerView.swift */; };
 		040920FE21E07F480024F164 /* TextFieldExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FD21E07F480024F164 /* TextFieldExt.swift */; };
 		0409210021E08E880024F164 /* RegisterContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920FF21E08E880024F164 /* RegisterContainerView.swift */; };
-		04B5D614222AE73F00BD2A80 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D613222AE73F00BD2A80 /* ViewModel.swift */; };
+		04B5D614222AE73F00BD2A80 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D613222AE73F00BD2A80 /* LoginViewModel.swift */; };
+		04B5D6A62242308700BD2A80 /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D6A52242308700BD2A80 /* LoginViewModelTests.swift */; };
+		04B5D6B022423D4200BD2A80 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D6AF22423D4200BD2A80 /* RegisterViewModel.swift */; };
+		04B5D6B32242411900BD2A80 /* RegisterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D6B22242411900BD2A80 /* RegisterViewModelTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		04B5D6A82242308700BD2A80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040920D221CD80680024F164 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 040920D921CD80680024F164;
+			remoteInfo = LoginSignUpDemo;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		040920DA21CD80680024F164 /* LoginSignUpDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginSignUpDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,11 +48,23 @@
 		040920FB21E06B610024F164 /* LoginContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginContainerView.swift; sourceTree = "<group>"; };
 		040920FD21E07F480024F164 /* TextFieldExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExt.swift; sourceTree = "<group>"; };
 		040920FF21E08E880024F164 /* RegisterContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterContainerView.swift; sourceTree = "<group>"; };
-		04B5D613222AE73F00BD2A80 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		04B5D613222AE73F00BD2A80 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		04B5D6A32242308700BD2A80 /* LoginSignUpDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoginSignUpDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04B5D6A52242308700BD2A80 /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
+		04B5D6A72242308700BD2A80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04B5D6AF22423D4200BD2A80 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		04B5D6B22242411900BD2A80 /* RegisterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		040920D721CD80680024F164 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04B5D6A02242308700BD2A80 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -53,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				040920DC21CD80680024F164 /* LoginSignUpDemo */,
+				04B5D6A42242308700BD2A80 /* LoginSignUpDemoTests */,
 				040920DB21CD80680024F164 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				040920DA21CD80680024F164 /* LoginSignUpDemo.app */,
+				04B5D6A32242308700BD2A80 /* LoginSignUpDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,7 +97,7 @@
 			children = (
 				040920DD21CD80680024F164 /* AppDelegate.swift */,
 				040920DF21CD80680024F164 /* LoginSignInController.swift */,
-				04B5D613222AE73F00BD2A80 /* ViewModel.swift */,
+				04B5D6B122423D7C00BD2A80 /* ViewModels */,
 				04B5D612222AE2E100BD2A80 /* Views */,
 				040920F121D2DEB00024F164 /* Extensions */,
 				040920E121CD80680024F164 /* Main.storyboard */,
@@ -101,6 +128,25 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		04B5D6A42242308700BD2A80 /* LoginSignUpDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				04B5D6A52242308700BD2A80 /* LoginViewModelTests.swift */,
+				04B5D6B22242411900BD2A80 /* RegisterViewModelTests.swift */,
+				04B5D6A72242308700BD2A80 /* Info.plist */,
+			);
+			path = LoginSignUpDemoTests;
+			sourceTree = "<group>";
+		};
+		04B5D6B122423D7C00BD2A80 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				04B5D613222AE73F00BD2A80 /* LoginViewModel.swift */,
+				04B5D6AF22423D4200BD2A80 /* RegisterViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,6 +167,24 @@
 			productReference = 040920DA21CD80680024F164 /* LoginSignUpDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		04B5D6A22242308700BD2A80 /* LoginSignUpDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04B5D6AC2242308700BD2A80 /* Build configuration list for PBXNativeTarget "LoginSignUpDemoTests" */;
+			buildPhases = (
+				04B5D69F2242308700BD2A80 /* Sources */,
+				04B5D6A02242308700BD2A80 /* Frameworks */,
+				04B5D6A12242308700BD2A80 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04B5D6A92242308700BD2A80 /* PBXTargetDependency */,
+			);
+			name = LoginSignUpDemoTests;
+			productName = LoginSignUpDemoTests;
+			productReference = 04B5D6A32242308700BD2A80 /* LoginSignUpDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -133,6 +197,10 @@
 				TargetAttributes = {
 					040920D921CD80680024F164 = {
 						CreatedOnToolsVersion = 10.1;
+					};
+					04B5D6A22242308700BD2A80 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 040920D921CD80680024F164;
 					};
 				};
 			};
@@ -150,6 +218,7 @@
 			projectRoot = "";
 			targets = (
 				040920D921CD80680024F164 /* LoginSignUpDemo */,
+				04B5D6A22242308700BD2A80 /* LoginSignUpDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -165,6 +234,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		04B5D6A12242308700BD2A80 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -172,10 +248,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B5D614222AE73F00BD2A80 /* ViewModel.swift in Sources */,
+				04B5D614222AE73F00BD2A80 /* LoginViewModel.swift in Sources */,
 				040920E021CD80680024F164 /* LoginSignInController.swift in Sources */,
 				040920FC21E06B610024F164 /* LoginContainerView.swift in Sources */,
 				040920F421D2DF440024F164 /* ViewAnchorExt.swift in Sources */,
+				04B5D6B022423D4200BD2A80 /* RegisterViewModel.swift in Sources */,
 				040920F021D2DEAA0024F164 /* UIColorExt.swift in Sources */,
 				0409210021E08E880024F164 /* RegisterContainerView.swift in Sources */,
 				040920DE21CD80680024F164 /* AppDelegate.swift in Sources */,
@@ -184,7 +261,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		04B5D69F2242308700BD2A80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04B5D6A62242308700BD2A80 /* LoginViewModelTests.swift in Sources */,
+				04B5D6B32242411900BD2A80 /* RegisterViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04B5D6A92242308700BD2A80 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 040920D921CD80680024F164 /* LoginSignUpDemo */;
+			targetProxy = 04B5D6A82242308700BD2A80 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		040920E121CD80680024F164 /* Main.storyboard */ = {
@@ -358,6 +452,46 @@
 			};
 			name = Release;
 		};
+		04B5D6AA2242308700BD2A80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FW4R4DYW79;
+				INFOPLIST_FILE = LoginSignUpDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Jeff.LoginSignUpDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoginSignUpDemo.app/LoginSignUpDemo";
+			};
+			name = Debug;
+		};
+		04B5D6AB2242308700BD2A80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FW4R4DYW79;
+				INFOPLIST_FILE = LoginSignUpDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Jeff.LoginSignUpDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoginSignUpDemo.app/LoginSignUpDemo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -375,6 +509,15 @@
 			buildConfigurations = (
 				040920ED21CD80690024F164 /* Debug */,
 				040920EE21CD80690024F164 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04B5D6AC2242308700BD2A80 /* Build configuration list for PBXNativeTarget "LoginSignUpDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04B5D6AA2242308700BD2A80 /* Debug */,
+				04B5D6AB2242308700BD2A80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -12,31 +12,32 @@ import Photos
 class LoginSignInController: UIViewController, UITextFieldDelegate {
     
     let loginRegisterView = LoginRegisterView()
-    let viewModel = LoginRegisterViewModel()
+    let loginViewModel = LoginViewModel()
+    let registerViewModel = RegisterViewModel()
+    
+    //MARK:- APP LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         configLoginRegisterView()
         TapScreenToHideKeyboard()
-        canUserTapButton(viewModel.isLoginValid)
+        canUserTapButton(false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
-            canUserTapButton(viewModel.isLoginValid)
+            canUserTapButton(loginViewModel.isLoginTextValid())
         } else {
-            canUserTapButton(viewModel.isRegisterValid)
+            canUserTapButton(registerViewModel.isRegisterTextValid())
         }
     }
     
-    //MARK:- CONFIGURATION: LoginRegisterView
+    //MARK:- CONFIGURATION
     fileprivate func configLoginRegisterView() {
         configButtons()
         configLoginContainerView()
         configRegisterContainerView()
         view = loginRegisterView
-        viewModel.isFormValidObserver = { [unowned self] (isValid) in
-            self.canUserTapButton(isValid)
-        }
+        
     }
     
     fileprivate func canUserTapButton(_ isFormValid: Bool) {
@@ -58,12 +59,18 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func configLoginContainerView() {
-        viewModel.RegisterPassword = loginRegisterView.loginContainerView.passwordTextField.text
+        loginViewModel.isLoginValidObserver = { [unowned self] (isValid) in
+            self.canUserTapButton(isValid)
+        }
         loginRegisterView.loginContainerView.emailTextField.addTarget(self, action: #selector(handleLoginTextChanged), for: .editingChanged)
         loginRegisterView.loginContainerView.passwordTextField.addTarget(self, action: #selector(handleLoginTextChanged), for: .editingChanged)
+        
     }
     
     fileprivate func configRegisterContainerView() {
+        registerViewModel.isRegisterValidObserver = { [unowned self] (isValid) in
+            self.canUserTapButton(isValid)
+        }
         loginRegisterView.registerContainerView.nameTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
         loginRegisterView.registerContainerView.emailTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
         loginRegisterView.registerContainerView.passwordTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
@@ -96,17 +103,17 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //MARK:- Login, Register, and forget password
+    //MARK:- BUTTONS
     @objc func handleLoginRegisterChange() {
         let title = loginRegisterView.loginRegisterSegmentedControl.titleForSegment(at: loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex)
         loginRegisterView.loginRegisterButton.setTitle(title, for: UIControl.State())
         
         if loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
             transitingToLogin()
-            canUserTapButton(viewModel.isLoginValid)
+            canUserTapButton(loginViewModel.isLoginTextValid())
         } else {
             transitingToRegister()
-            canUserTapButton(viewModel.isRegisterValid)
+            canUserTapButton(registerViewModel.isRegisterTextValid())
         }
     }
     
@@ -141,7 +148,7 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
         
     }
     
-    //MARK:- Keyboard and Textfield
+    //MARK:- KEYBOARD & TEXTFIELD
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleLoginRegister()
@@ -163,20 +170,20 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     @objc fileprivate func handleLoginTextChanged(textfield: UITextField) {
         let loginView = loginRegisterView.loginContainerView
         if textfield == loginView.emailTextField  {
-            viewModel.LoginEmail = loginView.emailTextField.text
+            loginViewModel.LoginEmail = loginView.emailTextField.text
         } else {
-            viewModel.LoginPassword = loginView.passwordTextField.text
+            loginViewModel.LoginPassword = loginView.passwordTextField.text
         }
     }
     
     @objc fileprivate func handleRegisterTextChanged(textfield: UITextField) {
         let registerView = loginRegisterView.registerContainerView
         if textfield == registerView.nameTextField  {
-            viewModel.RegisterName = registerView.nameTextField.text
+            registerViewModel.RegisterName = registerView.nameTextField.text
         } else if textfield == registerView.emailTextField {
-            viewModel.RegisterEmail = registerView.emailTextField.text
+            registerViewModel.RegisterEmail = registerView.emailTextField.text
         } else {
-            viewModel.RegisterPassword = registerView.passwordTextField.text
+            registerViewModel.RegisterPassword = registerView.passwordTextField.text
         }
     }
     
@@ -191,7 +198,7 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
 
 extension LoginSignInController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    //MARK:- Handle picking profile image
+    //MARK:- HANDLE PROFILE IMAGE
     @objc func handleSelectProfileImageView() {
         authorizeToAlbum { [unowned self] (status) in
             if status == true {
