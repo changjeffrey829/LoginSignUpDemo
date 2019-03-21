@@ -6,10 +6,11 @@
 //  Copyright © 2019 Jeffrey Chang. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class RegisterViewModel {
-    var isRegisterValidObserver: ((Bool) -> ())?
+    var bindableImage = Bindable<UIImage>()
+    var bindableIsRegisterValid = Bindable<Bool>()
     var RegisterEmail: String? {
         didSet {
             registerMinimumTextValidation(name: RegisterName, email: RegisterEmail, password: RegisterPassword)}
@@ -24,7 +25,7 @@ class RegisterViewModel {
     }
     fileprivate var isValid = false {
         didSet {
-            isRegisterValidObserver?(isValid)
+            bindableIsRegisterValid.value = isValid
         }
     }
     fileprivate func registerMinimumTextValidation(name: String?, email: String?, password: String?) {

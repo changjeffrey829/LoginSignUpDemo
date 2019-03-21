@@ -22,6 +22,7 @@
 		04B5D6A62242308700BD2A80 /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D6A52242308700BD2A80 /* LoginViewModelTests.swift */; };
 		04B5D6B022423D4200BD2A80 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D6AF22423D4200BD2A80 /* RegisterViewModel.swift */; };
 		04B5D6B32242411900BD2A80 /* RegisterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D6B22242411900BD2A80 /* RegisterViewModelTests.swift */; };
+		04B5D6BC2243958300BD2A80 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5D6BB2243958300BD2A80 /* Bindable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		04B5D6A72242308700BD2A80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04B5D6AF22423D4200BD2A80 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		04B5D6B22242411900BD2A80 /* RegisterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModelTests.swift; sourceTree = "<group>"; };
+		04B5D6BB2243958300BD2A80 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			children = (
 				040920DD21CD80680024F164 /* AppDelegate.swift */,
 				040920DF21CD80680024F164 /* LoginSignInController.swift */,
+				04B5D6BB2243958300BD2A80 /* Bindable.swift */,
 				04B5D6B122423D7C00BD2A80 /* ViewModels */,
 				04B5D612222AE2E100BD2A80 /* Views */,
 				040920F121D2DEB00024F164 /* Extensions */,
@@ -252,6 +255,7 @@
 				040920E021CD80680024F164 /* LoginSignInController.swift in Sources */,
 				040920FC21E06B610024F164 /* LoginContainerView.swift in Sources */,
 				040920F421D2DF440024F164 /* ViewAnchorExt.swift in Sources */,
+				04B5D6BC2243958300BD2A80 /* Bindable.swift in Sources */,
 				04B5D6B022423D4200BD2A80 /* RegisterViewModel.swift in Sources */,
 				040920F021D2DEAA0024F164 /* UIColorExt.swift in Sources */,
 				0409210021E08E880024F164 /* RegisterContainerView.swift in Sources */,

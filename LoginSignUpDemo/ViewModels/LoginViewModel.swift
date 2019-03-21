@@ -9,7 +9,8 @@
 import Foundation
 
 class LoginViewModel {
-    var isLoginValidObserver: ((Bool) -> ())?
+//    var isLoginValidObserver: ((Bool) -> ())?
+    var bindableIsLoginValid = Bindable<Bool>()
     var LoginEmail: String? {
         didSet {
             loginMinimumTextValidation(email: LoginEmail, password: LoginPassword)}
@@ -20,7 +21,8 @@ class LoginViewModel {
     }
     fileprivate var isValid = false {
         didSet {
-            isLoginValidObserver?(isValid)
+//            isLoginValidObserver?(isValid)
+            bindableIsLoginValid.value = isValid
         }
     }
     fileprivate func loginMinimumTextValidation(email: String?, password: String?) {

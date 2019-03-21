@@ -59,7 +59,8 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func configLoginContainerView() {
-        loginViewModel.isLoginValidObserver = { [unowned self] (isValid) in
+        loginViewModel.bindableIsLoginValid.bind { [unowned self] (isValid) in
+            let isValid = isValid ?? false
             self.canUserTapButton(isValid)
         }
         loginRegisterView.loginContainerView.emailTextField.addTarget(self, action: #selector(handleLoginTextChanged), for: .editingChanged)
@@ -68,8 +69,12 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func configRegisterContainerView() {
-        registerViewModel.isRegisterValidObserver = { [unowned self] (isValid) in
+        registerViewModel.bindableIsRegisterValid.bind { [unowned self] (isValid) in
+            let isValid = isValid ?? false
             self.canUserTapButton(isValid)
+        }
+        registerViewModel.bindableImage.bind { [unowned self] (image) in
+            self.loginRegisterView.profileImageView.image = image
         }
         loginRegisterView.registerContainerView.nameTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
         loginRegisterView.registerContainerView.emailTextField.addTarget(self, action: #selector(handleRegisterTextChanged), for: .editingChanged)
@@ -232,10 +237,8 @@ extension LoginSignInController: UIImagePickerControllerDelegate, UINavigationCo
     }
     
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.editedImage] as? UIImage else {
-            return
-        }
-        loginRegisterView.profileImageView.image = image
+        guard let image = info[.editedImage] as? UIImage else {return}
+        registerViewModel.bindableImage.value = image
         picker.dismiss(animated: true, completion: nil)
     }
     
