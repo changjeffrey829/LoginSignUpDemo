@@ -11,23 +11,38 @@ import UIKit
 class RegisterViewModel {
     var bindableImage = Bindable<UIImage>()
     var bindableIsRegisterValid = Bindable<Bool>()
-    var RegisterEmail: String? {
+    var registerEmail: String? {
         didSet {
-            registerMinimumTextValidation(name: RegisterName, email: RegisterEmail, password: RegisterPassword)}
+            registerMinimumTextValidation(name: registerName, email: registerEmail, password: registerPassword)}
     }
-    var RegisterName: String? {
+    var registerName: String? {
         didSet {
-            registerMinimumTextValidation(name: RegisterName, email: RegisterEmail, password: RegisterPassword)}
+            registerMinimumTextValidation(name: registerName, email: registerEmail, password: registerPassword)}
     }
-    var RegisterPassword: String? {
+    var registerPassword: String? {
         didSet {
-            registerMinimumTextValidation(name: RegisterName, email: RegisterEmail, password: RegisterPassword)}
+            registerMinimumTextValidation(name: registerName, email: registerEmail, password: registerPassword)}
     }
     fileprivate var isValid = false {
         didSet {
             bindableIsRegisterValid.value = isValid
         }
     }
+    
+    func performRegistration(completion:()->()) {
+        guard
+            let name = registerName,
+            let email = registerEmail,
+            let password = registerPassword,
+            let image = bindableImage.value
+            else {return}
+        print("REGISTER => Name: \(name), Email: \(email), Password: \(password), profileImageSize: \(image.size)")
+    }
+    
+    func isRegisterTextValid() -> Bool {
+        return isValid
+    }
+    
     fileprivate func registerMinimumTextValidation(name: String?, email: String?, password: String?) {
         let nameCount = name?.count ?? 0
         let emailCount = email?.count ?? 0
@@ -35,7 +50,5 @@ class RegisterViewModel {
         let result = nameCount > 0 && emailCount > 3 && passwordCount > 5
         isValid = result
     }
-    func isRegisterTextValid() -> Bool {
-        return isValid
-    }
+    
 }

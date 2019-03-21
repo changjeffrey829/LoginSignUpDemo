@@ -124,28 +124,12 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     
     @objc func handleLoginRegister() {
         if loginRegisterView.loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
-            handleLogin()
+            loginViewModel.performLogin {
+            }
         } else {
-            handleRegistration()
+            registerViewModel.performRegistration {
+            }
         }
-    }
-    
-    fileprivate func handleLogin() {
-        guard
-            let email = loginRegisterView.loginContainerView.emailTextField.text?.lowercased(),
-            let password = loginRegisterView.loginContainerView.passwordTextField.text?.lowercased()
-            else {return}
-        print("LOGIN => Email: \(email), Password: \(password)")
-    }
-    
-    fileprivate func handleRegistration() {
-        guard
-            let name = loginRegisterView.registerContainerView.nameTextField.text,
-            let email = loginRegisterView.registerContainerView.emailTextField.text,
-            let password = loginRegisterView.registerContainerView.passwordTextField.text,
-            let image = loginRegisterView.profileImageView.image
-            else {return}
-        print("REGISTER => Name: \(name), Email: \(email), Password: \(password), profileImageSize: \(image.size)")
     }
     
     @objc private func launchForgetPasswordVC() {
@@ -175,20 +159,20 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
     @objc fileprivate func handleLoginTextChanged(textfield: UITextField) {
         let loginView = loginRegisterView.loginContainerView
         if textfield == loginView.emailTextField  {
-            loginViewModel.LoginEmail = loginView.emailTextField.text
+            loginViewModel.loginEmail = loginView.emailTextField.text
         } else {
-            loginViewModel.LoginPassword = loginView.passwordTextField.text
+            loginViewModel.loginPassword = loginView.passwordTextField.text
         }
     }
     
     @objc fileprivate func handleRegisterTextChanged(textfield: UITextField) {
         let registerView = loginRegisterView.registerContainerView
         if textfield == registerView.nameTextField  {
-            registerViewModel.RegisterName = registerView.nameTextField.text
+            registerViewModel.registerName = registerView.nameTextField.text
         } else if textfield == registerView.emailTextField {
-            registerViewModel.RegisterEmail = registerView.emailTextField.text
+            registerViewModel.registerEmail = registerView.emailTextField.text
         } else {
-            registerViewModel.RegisterPassword = registerView.passwordTextField.text
+            registerViewModel.registerPassword = registerView.passwordTextField.text
         }
     }
     

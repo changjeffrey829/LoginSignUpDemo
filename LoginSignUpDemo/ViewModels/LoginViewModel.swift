@@ -9,19 +9,17 @@
 import Foundation
 
 class LoginViewModel {
-//    var isLoginValidObserver: ((Bool) -> ())?
     var bindableIsLoginValid = Bindable<Bool>()
-    var LoginEmail: String? {
+    var loginEmail: String? {
         didSet {
-            loginMinimumTextValidation(email: LoginEmail, password: LoginPassword)}
+            loginMinimumTextValidation(email: loginEmail, password: loginPassword)}
     }
-    var LoginPassword: String? {
+    var loginPassword: String? {
         didSet {
-            loginMinimumTextValidation(email: LoginEmail, password: LoginPassword)}
+            loginMinimumTextValidation(email: loginEmail, password: loginPassword)}
     }
     fileprivate var isValid = false {
         didSet {
-//            isLoginValidObserver?(isValid)
             bindableIsLoginValid.value = isValid
         }
     }
@@ -31,6 +29,15 @@ class LoginViewModel {
         let result = emailCount > 3 && passwordCount > 5
         isValid = result
     }
+    
+    func performLogin(completion:()->()) {
+        guard
+            let email = loginEmail,
+            let password = loginPassword
+            else {return}
+        print("LOGIN => Email: \(email), Password: \(password)")
+    }
+    
     func isLoginTextValid() -> Bool {
         return isValid
     }
