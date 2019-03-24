@@ -22,8 +22,8 @@ class LoginViewModelTests: XCTestCase {
     
     func testTextMeetRequirement() {
         setUp()
-        sut.LoginEmail = "123123"
-        sut.LoginPassword = "123123"
+        sut.loginEmail = "123123"
+        sut.loginPassword = "123123"
         let result = sut.isLoginTextValid()
         XCTAssert(result)
         tearDown()
@@ -31,8 +31,8 @@ class LoginViewModelTests: XCTestCase {
     
     func testEmailFailRequirement() {
         setUp()
-        sut.LoginEmail = "13"
-        sut.LoginPassword = "123123"
+        sut.loginEmail = "13"
+        sut.loginPassword = "123123"
         let result = sut.isLoginTextValid()
         XCTAssertFalse(result)
         tearDown()
@@ -40,8 +40,8 @@ class LoginViewModelTests: XCTestCase {
     
     func testPasswordFailRequirement() {
         setUp()
-        sut.LoginEmail = "12123"
-        sut.LoginPassword = "1"
+        sut.loginEmail = "12123"
+        sut.loginPassword = "1"
         let result = sut.isLoginTextValid()
         XCTAssertFalse(result)
         tearDown()

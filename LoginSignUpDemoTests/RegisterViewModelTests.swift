@@ -22,9 +22,9 @@ class RegisterViewModelTests: XCTestCase {
     
     func testTextMeetRequirement() {
         setUp()
-        sut.RegisterName = "1"
-        sut.RegisterEmail = "12123"
-        sut.RegisterPassword = "123123"
+        sut.registerName = "1"
+        sut.registerEmail = "12123"
+        sut.registerPassword = "123123"
         let result = sut.isRegisterTextValid()
         XCTAssert(result)
         tearDown()
@@ -32,9 +32,9 @@ class RegisterViewModelTests: XCTestCase {
     
     func testUsernameFailRequirement() {
         setUp()
-        sut.RegisterName = ""
-        sut.RegisterEmail = "12123"
-        sut.RegisterPassword = "123123"
+        sut.registerName = ""
+        sut.registerEmail = "12123"
+        sut.registerPassword = "123123"
         let result = sut.isRegisterTextValid()
         XCTAssertFalse(result)
         tearDown()
@@ -42,9 +42,9 @@ class RegisterViewModelTests: XCTestCase {
     
     func testEmailFailRequirement() {
         setUp()
-        sut.RegisterName = "1"
-        sut.RegisterEmail = ""
-        sut.RegisterPassword = "123123"
+        sut.registerName = "1"
+        sut.registerEmail = ""
+        sut.registerPassword = "123123"
         let result = sut.isRegisterTextValid()
         XCTAssertFalse(result)
         tearDown()
@@ -52,9 +52,9 @@ class RegisterViewModelTests: XCTestCase {
     
     func testPasswordFailRequirement() {
         setUp()
-        sut.RegisterName = "1"
-        sut.RegisterEmail = "12123"
-        sut.RegisterPassword = ""
+        sut.registerName = "1"
+        sut.registerEmail = "12123"
+        sut.registerPassword = ""
         let result = sut.isRegisterTextValid()
         XCTAssertFalse(result)
         tearDown()
