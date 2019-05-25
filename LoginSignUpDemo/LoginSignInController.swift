@@ -12,10 +12,17 @@ import Photos
 class LoginSignInController: UIViewController, UITextFieldDelegate {
     
     let loginRegisterView = LoginRegisterView()
-    let loginViewModel = LoginViewModel()
-    let registerViewModel = RegisterViewModel()
+    let loginViewModel: LoginViewModel
+    let registerViewModel: RegisterViewModel
     
     //MARK:- APP LIFE CYCLE
+    
+    init(loginViewModel: LoginViewModel, registerViewModel: RegisterViewModel) {
+        self.loginViewModel = loginViewModel
+        self.registerViewModel = registerViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configLoginRegisterView()
@@ -182,6 +189,10 @@ class LoginSignInController: UIViewController, UITextFieldDelegate {
             self.view.endEditing(true)
             self.view.layoutIfNeeded()
         }, completion: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

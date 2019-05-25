@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040431E72264657900E22ED4 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 040431E62264657900E22ED4 /* credentials.plist */; };
 		040920DE21CD80680024F164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920DD21CD80680024F164 /* AppDelegate.swift */; };
 		040920E021CD80680024F164 /* LoginSignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040920DF21CD80680024F164 /* LoginSignInController.swift */; };
 		040920E521CD80690024F164 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040920E421CD80690024F164 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040431E62264657900E22ED4 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		040920DA21CD80680024F164 /* LoginSignUpDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginSignUpDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		040920DD21CD80680024F164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		040920DF21CD80680024F164 /* LoginSignInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSignInController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				040920E421CD80690024F164 /* Assets.xcassets */,
 				040920E621CD80690024F164 /* LaunchScreen.storyboard */,
 				040920E921CD80690024F164 /* Info.plist */,
+				040431E62264657900E22ED4 /* credentials.plist */,
 			);
 			path = LoginSignUpDemo;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				040920E821CD80690024F164 /* LaunchScreen.storyboard in Resources */,
+				040431E72264657900E22ED4 /* credentials.plist in Resources */,
 				040920E521CD80690024F164 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

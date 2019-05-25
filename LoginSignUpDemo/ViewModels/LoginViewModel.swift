@@ -10,20 +10,24 @@ import Foundation
 
 class LoginViewModel {
     var bindableIsLoginValid = Bindable<Bool>()
+    
     var loginEmail: String? {
         didSet {
             loginMinimumTextValidation(email: loginEmail, password: loginPassword)}
     }
+    
     var loginPassword: String? {
         didSet {
             loginMinimumTextValidation(email: loginEmail, password: loginPassword)}
     }
-    fileprivate var isValid = false {
+    
+    private var isValid = false {
         didSet {
             bindableIsLoginValid.value = isValid
         }
     }
-    fileprivate func loginMinimumTextValidation(email: String?, password: String?) {
+    
+    private func loginMinimumTextValidation(email: String?, password: String?) {
         let emailCount = email?.count ?? 0
         let passwordCount = password?.count ?? 0
         let result = emailCount > 3 && passwordCount > 5
